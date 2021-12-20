@@ -1,0 +1,182 @@
+
+#include<stdio.h>
+#include<string.h>
+struct stu
+{
+    int rollno;
+    char name[20];
+    char div;
+    char add[100];
+};
+struct stu1
+{
+  int rollno;
+    char name[20];
+    char div;
+    char add[100];
+};
+void accept(struct stu s[10],int n)
+{
+    int i;
+    for(i=0;i<n;i++)
+    {  printf("\nthe information of %d student",i+1);
+        scanf("%d %s %c %s",&s[i].rollno,s[i].name,&s[i].div,s[i].add);
+
+    }
+}
+int filewrite(struct stu s[10],int n)
+{
+    FILE *ptr;
+    ptr=fopen("c program ass 4.c","a");
+    if(ptr==NULL)
+    {
+        printf("error");
+    }
+    else
+    {
+           fputs("-------------------------------------------------------\n",ptr);
+           fputs("rn name   div  address      \n",ptr);
+           fputs("-------------------------------------------------------\n",ptr);
+        for(int i=0;i<n;i++)
+        {
+            fprintf(ptr," %d %s %c %s",s[i].rollno,s[i].name,s[i].div,s[i].add);
+            fputs("\n",ptr);
+        }
+         fputs("---------------------------------------------------------\n",ptr);
+    }
+
+    fclose(ptr);
+
+
+}
+int filedisplay(struct stu s[10],int n,struct stu1 p[10])
+
+{
+    FILE *ptr;
+    ptr=fopen("c program ass 4.c","a");
+    if(ptr==NULL)
+    {
+        printf("error");
+    }
+    else
+    {
+
+        for(int i=0;i<n;i++)
+        {
+            fprintf(ptr," %d %s %c %s",s[i].rollno,s[i].name,s[i].div,s[i].add);
+            fputs("\n",ptr);
+        }
+
+    }
+       printf("\nthe information of student taken from file  \n\n");
+        for(int i=0;i<n;i++)
+        {
+            fscanf(ptr," %d %s %c %s",&s[i].rollno,s[i].name,&s[i].div,s[i].add);
+            fgetc(ptr);
+            printf("%d %s %c %s",s[i].rollno,s[i].name,s[i].div,s[i].add);
+            printf("\n");
+
+        }
+
+}
+int fileread(struct stu s[10],int n,struct stu1 p[10])
+
+{
+    int w;
+    FILE *ptr;
+    ptr=fopen("c program ass 4.c","a");
+    if(ptr==NULL)
+    {
+        printf("error");
+    }
+    else
+    {
+
+        for(int i=0;i<n;i++)
+        {
+            fprintf(ptr," %d %s %c %s",s[i].rollno,s[i].name,s[i].div,s[i].add);
+            fputs("\n",ptr);
+        }
+
+    }
+    printf("enter the roll no of student whose information you want ");
+    scanf("%d",&w);
+        for(int i=0;i<n;i++)
+        {
+            if(w==s[i].rollno)
+            {
+                  printf("\nInformation of student :\n");
+            fscanf(ptr," %d %s %c %s",&s[i].rollno,s[i].name,&s[i].div,s[i].add);
+            printf("%d %s %c %s",s[i].rollno,s[i].name,s[i].div,s[i].add);
+            return 0;
+
+        }
+
+}
+            printf("\nInformation of student is not in our file\n");
+
+}
+
+int filedelete(struct stu s[10],int n,struct stu1 p[10])
+
+{
+    int w,e=0;
+    FILE *ptr;
+    FILE *NEW;
+    ptr=fopen("c program ass 4.c","a");
+    NEW=fopen("c ass 4.c","w");
+    printf("enter the roll no of student whose information you want to delete ");
+    scanf("%d",&w);
+    if(ptr==NULL)
+    {
+        printf("error");
+    }
+    else
+    {
+        for(int i=0;i<n;i++)
+        {
+             fscanf(ptr," %d %s %c %s",&s[i].rollno,s[i].name,&s[i].div,s[i].add);
+            if(s[i].rollno!=w)
+           {
+               fprintf(NEW," %d %s %c %s",s[i].rollno,s[i].name,s[i].div,s[i].add);
+               fputs("\n",NEW);
+               e++;
+           }
+           }
+           fclose(ptr);
+           fclose(NEW);
+
+}
+}
+
+int main()
+{
+    struct stu s[10];
+    struct stu1 p[10];
+    int n,k,m;
+    printf("enter the no of students : ");
+    scanf("%d",&n);
+    accept(s,n);
+    printf("enter 1 if you want use or 0 if you want to close");
+    scanf("%d",&m);
+    while(m==1)
+    {
+
+    printf("\n\nchoose any one option \n 1 filewrite\n 2.filedisplay\n 3.fileread\n 4.filedelete\n 5.exit\n");
+    scanf("%d",&k);
+    switch(k)
+    {
+
+    case 1: filewrite( s, n);
+              break;
+    case 2 : filedisplay(s,n,p);
+              break;
+    case 3 : fileread(s,n,p);
+              break;
+      case 4: filedelete(s,n,p);
+              break;
+    case 5 : return(0);
+    }
+    }
+}
+
